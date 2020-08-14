@@ -23,8 +23,8 @@ function Snake(){
         //current position + 1 tile distance in the direction headed
         newPos = createVector(mod(curX + this.xdir*tileSize,canvasWidth), mod(curY + this.ydir*tileSize, canvasHeight));
 
-        //check if head ran into body
-        if(this.positions.length > 2 && newPos in this.positions.slice(2)){
+        //check if head ran into body and reset if true
+        if(this.positions.length > 2 && containsVector(newPos, this.positions, 2)){
             this.reset();
         }
         else{
@@ -45,7 +45,7 @@ function Snake(){
         }
     }
 
-    this.eat = function(food){
+    this.tryEat = function(food){
         curPos = this.positions[0];
         xpos = curPos.x;
         ypos = curPos.y;

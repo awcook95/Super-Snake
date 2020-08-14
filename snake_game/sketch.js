@@ -15,11 +15,10 @@ function setup() {
 
 function draw() {
   background(50);
-  console.log(snake.positions[0])
   food.show();
   snake.update();
   snake.show();
-  snake.eat(food);
+  snake.tryEat(food);
   
 
 }
@@ -42,5 +41,12 @@ function keyPressed(){
 //function that returns positive remainder for negative numbers
 function mod(n, m) {
   return ((n % m) + m) % m;
+}
+
+function containsVector(vec, array, slice){
+  for(var i = slice; i < array.length; i++){
+    if(vec.equals(array[i])) return true;
+  }
+  return false;
 }
 
