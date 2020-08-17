@@ -21,16 +21,20 @@ function Snake(){
         curX = curPos.x;
         curY = curPos.y;
         //current position + 1 tile distance in the direction headed
-        newPos = createVector(mod(curX + this.xdir*tileSize,canvasWidth), mod(curY + this.ydir*tileSize, canvasHeight));
+        //newPos = createVector(mod(curX + this.xdir*tileSize,canvasWidth), mod(curY + this.ydir*tileSize, canvasHeight));
+        newPos = createVector(curX + this.xdir*tileSize, curY + this.ydir*tileSize);
+        if(newPos.x > canvasWidth || newPos.y > canvasHeight || newPos.x < 0 || newPos.y < 0){
+            this.reset();
+        }
 
         //check if head ran into body and reset if true
-        if(this.positions.length > 2 && containsVector(newPos, this.positions, 2)){
+        else if(this.positions.length > 2 && containsVector(newPos, this.positions, 2)){
             this.reset();
         }
         else{
-            //insert new head position
+            //insert new head position at beginning of array
             this.positions.unshift(newPos);
-            //if snake ate food do not pop
+            //if snake ate food do not remove from back of array
             if(this.positions.length > this.length){
                 this.positions.pop();
             }
@@ -60,5 +64,6 @@ function Snake(){
         this.ydir = 0;
         this.length = 1;
         this.positions = [createVector(canvasWidth/2, canvasHeight/2)];
+        mode = gameOverScreen;
     }
   }

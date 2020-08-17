@@ -6,19 +6,51 @@ var gridHeight = canvasHeight / tileSize
 var snake;
 var food;
 
+var mode = 0;
+const startScreen = 0;
+const gameScreen = 1;
+const gameOverScreen = 2;
+
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
   frameRate(10);
   snake = new Snake();
   food = new Food();
+
 }
 
 function draw() {
+  if(mode == startScreen){
+    background(200);
+    fill(0);
+    textSize(64);
+    textFont('Helvetica');
+    text('Super Snake', 110, 300);
+    textSize(12);
+    text('Press Enter to Start', 230, 350);
+    if(keyCode === ENTER){
+      mode = gameScreen;
+    }
+  }
+  else if(mode == gameScreen){
   background(50);
   food.show();
-  snake.update();
   snake.show();
+  snake.update();
   snake.tryEat(food);
+  }
+  else if(mode == gameOverScreen){
+    background(200);
+    fill(0);
+    textSize(64);
+    textFont('Helvetica');
+    text('Game Over', 125, 300);
+    textSize(12);
+    text('Press Enter to Play Again', 225, 350);
+    if(keyCode === ENTER){
+      mode = gameScreen;
+    }
+  }
   
 
 }
