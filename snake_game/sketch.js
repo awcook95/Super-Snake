@@ -3,6 +3,7 @@ var canvasHeight = 600
 var tileSize = 20; //unit of size the canvas is divided into
 var gridWidth = canvasWidth / tileSize
 var gridHeight = canvasHeight / tileSize
+var framerate = 5;
 var snake;
 var food;
 
@@ -13,7 +14,7 @@ const gameOverScreen = 2;
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
-  frameRate(10);
+  frameRate(framerate);
   snake = new Snake();
   food = new Food();
 
@@ -34,12 +35,15 @@ function draw() {
   }
   else if(mode == gameScreen){
   background(50);
+  snake.showScore();
   food.show();
   snake.show();
   snake.update();
   snake.tryEat(food);
+  frameRate(framerate);
   }
   else if(mode == gameOverScreen){
+    framerate = 5;
     background(200);
     fill(0);
     textSize(64);
@@ -76,7 +80,7 @@ function mod(n, m) {
 }
 
 function containsVector(vec, array, slice){
-  for(var i = slice; i < array.length; i++){
+  for(let i = slice; i < array.length; i++){
     if(vec.equals(array[i])) return true;
   }
   return false;

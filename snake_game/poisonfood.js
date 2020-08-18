@@ -1,0 +1,3 @@
+class Poisonfood extends Enemy{
+    
+}

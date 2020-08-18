@@ -1,8 +1,10 @@
 function Snake(){
+    this.score = 0;
     this.color = 'white'
     this.xdir = 1;
     this.ydir = 0;
     this.length = 1;
+    this.collision = true;
     //head position starts center of screen
     this.positions = [createVector(canvasWidth/2, canvasHeight/2)];
 
@@ -23,7 +25,8 @@ function Snake(){
         //current position + 1 tile distance in the direction headed
         //newPos = createVector(mod(curX + this.xdir*tileSize,canvasWidth), mod(curY + this.ydir*tileSize, canvasHeight));
         newPos = createVector(curX + this.xdir*tileSize, curY + this.ydir*tileSize);
-        if(newPos.x > canvasWidth || newPos.y > canvasHeight || newPos.x < 0 || newPos.y < 0){
+        //check if collision is on and reset if hit wall
+        if(this.collision && newPos.x > canvasWidth || newPos.y > canvasHeight || newPos.x < 0 || newPos.y < 0){
             this.reset();
         }
 
@@ -43,7 +46,7 @@ function Snake(){
     }
   
     this.show = function(){
-        for(var i = 0; i < this.positions.length; i++){
+        for(let i = 0; i < this.positions.length; i++){
             fill(this.color);
             rect(this.positions[i].x, this.positions[i].y, tileSize, tileSize);
         }
@@ -54,16 +57,27 @@ function Snake(){
         xpos = curPos.x;
         ypos = curPos.y;
         if(xpos == food.x && ypos == food.y){
+            framerate += 2;
+            this.score++;
             this.length++;
             food.randomizePos();
         }
     }
 
+    this.showScore = function(){
+        fill(10);
+        textSize(20);
+        textFont('Helvetica');
+        text('Score: ' + this.score, 15, 30);
+    }
+
     this.reset = function(){
+        this.score = 0;
         this.xdir = 1;
         this.ydir = 0;
         this.length = 1;
         this.positions = [createVector(canvasWidth/2, canvasHeight/2)];
+        this.collision = true;
         mode = gameOverScreen;
     }
   }
