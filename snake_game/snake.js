@@ -57,7 +57,6 @@ function Snake(){
         xpos = curPos.x;
         ypos = curPos.y;
         if(xpos == food.x && ypos == food.y){
-            framerate += 2;
             this.score++;
             this.length++;
             food.randomizePos();

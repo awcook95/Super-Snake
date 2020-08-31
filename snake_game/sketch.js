@@ -3,23 +3,28 @@ var canvasHeight = 600
 var tileSize = 20; //unit of size the canvas is divided into
 var gridWidth = canvasWidth / tileSize
 var gridHeight = canvasHeight / tileSize
-var framerate = 5;
+var framerate = 10;
 var snake;
 var food;
+var enemies
 
+//game state variables
 var mode = 0;
 const startScreen = 0;
 const gameScreen = 1;
 const gameOverScreen = 2;
+const pause = 3;
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
   frameRate(framerate);
   snake = new Snake();
   food = new Food();
+  enemies = new Enemies();
 
 }
 
+//main game loop
 function draw() {
   if(mode == startScreen){
     background(200);
@@ -34,13 +39,15 @@ function draw() {
     }
   }
   else if(mode == gameScreen){
-  background(50);
-  snake.showScore();
-  food.show();
-  snake.show();
-  snake.update();
-  snake.tryEat(food);
-  frameRate(framerate);
+    background(50);
+    snake.showScore();
+    food.show();
+    snake.show();
+    snake.update();
+    snake.tryEat(food);
+    if(keyCode === 80){
+      mode = pause;
+    }
   }
   else if(mode == gameOverScreen){
     framerate = 5;
@@ -52,6 +59,17 @@ function draw() {
     textSize(12);
     text('Press Enter to Play Again', 225, 350);
     if(keyCode === ENTER){
+      mode = gameScreen;
+    }
+  }
+
+  else if(mode == pause){
+    background(50);
+    snake.showScore();
+    food.show();
+    snake.show();
+    dialogueBox("Game paused: Press u to unpause");
+    if(keyCode === 85){
       mode = gameScreen;
     }
   }
@@ -79,6 +97,7 @@ function mod(n, m) {
   return ((n % m) + m) % m;
 }
 
+//function that checks if a vector (x,y) is in an array starting from slice
 function containsVector(vec, array, slice){
   for(let i = slice; i < array.length; i++){
     if(vec.equals(array[i])) return true;
