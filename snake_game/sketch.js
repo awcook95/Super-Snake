@@ -40,10 +40,13 @@ function draw() {
   }
   else if(mode == gameScreen){
     background(50);
-    snake.showScore();
     food.show();
+    enemies.spawnRandom(snake.score);
+    enemies.show();
+    snake.showScore();
     snake.show();
     snake.update();
+    snake.hitEnemy();
     snake.tryEat(food);
     if(keyCode === 80){
       mode = pause;

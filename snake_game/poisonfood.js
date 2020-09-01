@@ -1,10 +1,10 @@
 function Poisonfood(){
-    this.xpos = random(1,gridWidth-1)*tileSize; //generate random position aligned on grid 1 tile away from walls
-    this.ypos = random(1,gridHeight-1)*tileSize;
+    this.xpos = floor(random(0,gridWidth))*tileSize; //generate random position aligned on grid
+    this.ypos = floor(random(0,gridHeight))*tileSize;
 
     this.show = function(){
         fill(145, 47, 207);
-        rect(this.x, this.y, tileSize, tileSize);//xpos, ypos, xsize, ysize
+        rect(this.xpos, this.ypos, tileSize, tileSize);//xpos, ypos, xsize, ysize
     }
 
     this.update = function(){

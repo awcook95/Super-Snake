@@ -1,21 +1,26 @@
 function Enemies(){
-    this.enemies = [];
-    this.numEnemies = 0;
+    this.list = [];
+    this.count = 0;
 
-    this.spawnRandom = function(){ //spawns random enemy
-        this.numEnemies++;
-        switch(floor(random(1, this.numEnemies)) % 2){ //pick random enemy, modulo makes sure it fits into possible cases
-            case 1:
-                this.enemies.push(new Poisonfood());
-                break;
-        } 
+    this.spawnRandom = function(score){ //spawns random enemy
+        if(floor(random(0, 100) < score/2)){ //the higher the score the higher the chance of spawn
+            this.count++;
+            enemy = new Poisonfood();
+            this.list.push(enemy);
+        }
+        
     }
     
     this.show = function(){ //draws every enemy currently spawned
-        for(let i = 0; i < this.numEnemies; i++){
-            this.enemies[i].update;
-            this.enemies[i].show;
+        for(let i = 0; i < this.count; i++){
+            this.list[i].update();
+            this.list[i].show();
         }
+    }
+
+    this.reset = function(){
+        this.list = [];
+        this.count = 0;
     }
 
 

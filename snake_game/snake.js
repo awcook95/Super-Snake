@@ -4,9 +4,8 @@ function Snake(){
     this.xdir = 1;
     this.ydir = 0;
     this.length = 1;
-    this.collision = true;
-    //head position starts center of screen
-    this.positions = [createVector(canvasWidth/2, canvasHeight/2)];
+    this.collision = true; //wrap around the stage or not
+    this.positions = [createVector(canvasWidth/2, canvasHeight/2)]; //head position starts center of screen
 
     this.turn = function(x,y){
         if(this.length > 1 && x * -1 == this.xdir && y * -1 == this.ydir){ //check if attempting to turn backwards while longer than 1
@@ -56,15 +55,23 @@ function Snake(){
         curPos = this.positions[0];
         xpos = curPos.x;
         ypos = curPos.y;
-        if(xpos == food.x && ypos == food.y){
+        if(xpos == food.xpos && ypos == food.ypos){
             this.score++;
             this.length++;
             food.randomizePos();
         }
     }
 
+    this.hitEnemy = function(){ //checks if head position of snake contacts any enemy
+        for(let i = 0; i < enemies.count; i++){
+            if(this.positions[0].x == enemies.list[i].xpos && this.positions[0].y == enemies.list[i].ypos){
+                this.reset();
+            }
+        }
+    }
+
     this.showScore = function(){
-        fill(10);
+        fill(200);
         textSize(20);
         textFont('Helvetica');
         text('Score: ' + this.score, 15, 30);
@@ -77,6 +84,8 @@ function Snake(){
         this.length = 1;
         this.positions = [createVector(canvasWidth/2, canvasHeight/2)];
         this.collision = true;
+        food.randomizePos();
+        enemies.reset();
         mode = gameOverScreen;
     }
   }
