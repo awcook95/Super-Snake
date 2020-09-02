@@ -40,8 +40,8 @@ function draw() {
   }
   else if(mode == gameScreen){
     background(50);
-    food.show();
     enemies.spawnRandom(snake.score);
+    food.show();
     enemies.show();
     snake.showScore();
     snake.show();
