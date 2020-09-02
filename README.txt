@@ -5,4 +5,4 @@ Controls:
 - p to pause
 - u to unpause
 
-Made using the JavaScript P5.js
+Made using the JavaScript P5.js library
