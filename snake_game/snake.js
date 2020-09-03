@@ -1,6 +1,7 @@
 function Snake(){
     this.score = 0;
-    this.color = 'white'
+    this.colors = [color(255,255,255), color(247, 94, 94), color(245, 66, 66), color(245, 32, 32), color(204, 12, 12)]
+    this.charge = 0;
     this.xdir = 1;
     this.ydir = 0;
     this.length = 1;
@@ -46,7 +47,7 @@ function Snake(){
   
     this.show = function(){
         for(let i = 0; i < this.positions.length; i++){
-            fill(this.color);
+            fill(this.colors[this.charge]);
             rect(this.positions[i].x, this.positions[i].y, tileSize, tileSize);
         }
     }
@@ -56,6 +57,9 @@ function Snake(){
         xpos = curPos.x;
         ypos = curPos.y;
         if(xpos == food.xpos && ypos == food.ypos){
+            if(this.charge < 4){
+                this.charge++;
+            }
             this.score++;
             this.length++;
             food.randomizePos();
@@ -87,5 +91,14 @@ function Snake(){
         food.randomizePos();
         enemies.reset();
         mode = gameOverScreen;
+    }
+
+    this.bomb = function(){
+    if(this.charge == 4){
+        this.charge = 0;
+        fill(255);
+        rect(0, 0, 600, 600);
+        enemies.reset();
+        }
     }
   }

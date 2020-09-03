@@ -29,16 +29,18 @@ function draw() {
   if(mode == startScreen){
     background(200);
     fill(0);
+    textAlign(CENTER);
     textSize(64);
     textFont('Helvetica');
-    text('Super Snake', 110, 300);
+    text('Super Snake', 290, 300);
     textSize(12);
-    text('Press Enter to Start', 230, 350);
+    text('Press Enter to Start\nControls: Arrow keys to move\nOnce fully charged, z for special move\np to pause', 290, 350);
     if(keyCode === ENTER){
       mode = gameScreen;
     }
   }
   else if(mode == gameScreen){
+    textAlign(LEFT);
     background(50);
     enemies.spawnRandom(snake.score);
     food.show();
@@ -82,16 +84,19 @@ function draw() {
 
 function keyPressed(){
   if(keyCode === UP_ARROW){
-    snake.turn(0,-1)
+    snake.turn(0,-1);
   }
   else if(keyCode === DOWN_ARROW){
-    snake.turn(0,1)
+    snake.turn(0,1);
   }
   else if(keyCode === LEFT_ARROW){
-    snake.turn(-1,0)
+    snake.turn(-1,0);
   }
   else if(keyCode === RIGHT_ARROW){
-    snake.turn(1,0)
+    snake.turn(1,0);
+  }
+  else if(keyCode === 90){
+    snake.bomb();
   }
 }
 
